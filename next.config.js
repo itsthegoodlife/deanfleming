@@ -8,14 +8,9 @@ const nextConfig = {
   images: {
     domains: ['avatars.githubusercontent.com'], // For your GitHub avatar
   },
-  // Add custom domain configuration
+  // Simplified rewrites
   async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        destination: '/:path*',
-      },
-    ]
+    return []
   },
 }
 
