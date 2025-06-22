@@ -212,7 +212,7 @@ export default function Home() {
           <div className="glass-card rounded-2xl p-8 md:p-12 text-center hover-lift">
             <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Get in Touch</h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
-              Interested in collaborating or learning more about my work? Let's connect.
+              Interested in collaborating or learning more about my work? Let&apos;s connect.
             </p>
             <div className="flex flex-wrap gap-6 justify-center">
               <Link 
