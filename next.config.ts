@@ -13,6 +13,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  
+  // Disable experimental features that might cause issues
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
+  
+  // Ensure proper server configuration
+  poweredByHeader: false,
 };
 
 export default nextConfig;
