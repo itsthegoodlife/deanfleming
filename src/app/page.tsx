@@ -1,162 +1,244 @@
 'use client'
 
-import { LandingCard } from "@/components/landing-card"
-import { AnimatedBackground } from "@/components/animated-background"
-import { Sparkles, Terminal, Cpu, Scan, Power } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import { useState, useEffect } from "react"
+import { Github, Linkedin, ExternalLink, Building2, Code2, Wrench, ArrowUpRight } from "lucide-react"
+import Link from "next/link"
+import Image from "next/image"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [systemMessages, setSystemMessages] = useState<string[]>([]);
-  
-  // Simulate system boot sequence
-  useEffect(() => {
-    const messages = [
-      "Initializing quantum interface...",
-      "Establishing neural connection...",
-      "Loading holographic projections...",
-      "Calibrating dimensional stabilizers...",
-      "Synchronizing temporal flux...",
-      "Activating Dean Fleming's digital presence..."
-    ];
-    
-    let currentIndex = 0;
-    
-    const interval = setInterval(() => {
-      if (currentIndex < messages.length) {
-        setSystemMessages(prev => [...prev, messages[currentIndex]]);
-        currentIndex++;
-        setLoadingProgress(prev => prev + (100 / messages.length));
-      } else {
-        clearInterval(interval);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-      }
-    }, 500);
-    
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <main className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center p-4 selection:bg-purple-500/20 selection:text-purple-200 overflow-hidden relative">
-      <AnimatedBackground />
-      
-      <AnimatePresence>
-        {isLoading ? (
-          <motion.div 
-            key="loading"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black"
-          >
-            <div className="w-full max-w-md space-y-8">
-              <div className="flex items-center justify-center">
-                <Power className="h-16 w-16 text-purple-500 animate-pulse" />
-              </div>
-              
-              <div className="space-y-4">
-                <div className="h-1 w-full bg-neutral-800 rounded-full overflow-hidden">
-                  <motion.div 
-                    className="h-full bg-gradient-to-r from-purple-500 to-blue-500"
-                    animate={{ width: `${loadingProgress}%` }}
-                  />
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 transition-all duration-300">
+      {/* Navigation */}
+      <nav className="fixed top-0 right-0 p-6 z-50">
+        <ThemeToggle />
+      </nav>
+
+      <div className="max-w-6xl mx-auto px-6 py-20">
+        {/* Combined Hero + About Section */}
+        <section className="mb-24">
+          <div className="glass-card rounded-3xl p-8 md:p-16 hover-lift animate-fade-in-up">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left Column - Content */}
+              <div className="space-y-8">
+                <div className="space-y-6">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
+                    <span className="gradient-text">Dean Fleming</span>
+                  </h1>
+                  <p className="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-200">
+                    Director & Developer
+                  </p>
+                  <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Building solutions for the mortgage industry
+                  </p>
                 </div>
-                
-                <div className="font-mono text-xs text-neutral-500 h-32 overflow-hidden flex flex-col-reverse">
-                  {systemMessages.map((message, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-purple-400"
-                    >
-                      &gt; {message}
-                    </motion.div>
-                  ))}
+
+                <div className="space-y-6">
+                  <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                    As Director of DFMB, I lead a mortgage brokerage firm while developing 
+                    the software tools that power our operations and improve client experiences.
+                  </p>
+                  <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                    I combine deep industry knowledge with technical expertise to build 
+                    practical solutions for real business challenges.
+                  </p>
+                </div>
+
+                {/* Quick Stats */}
+                <div className="grid grid-cols-3 gap-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">3+</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">Active Projects</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-green-600 dark:text-green-400">10+</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">Years Experience</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">UK</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">Based</div>
+                  </div>
                 </div>
               </div>
-              
-              <div className="text-center text-neutral-400 text-sm">
-                <p>Initializing Dean Fleming's Digital Space</p>
-                <p className="text-xs text-neutral-600 mt-1">{Math.round(loadingProgress)}% complete</p>
+
+              {/* Right Column - Photo */}
+              <div className="flex justify-center lg:justify-end">
+                <div className="relative">
+                  {/* Gradient Ring */}
+                  <div className="absolute -inset-4 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full blur-lg opacity-75 animate-pulse"></div>
+                  {/* Photo Container */}
+                  <div className="relative w-80 h-80 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 p-1">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-slate-800">
+                      <Image
+                        src="/dean-headshot.jpg"
+                        alt="Dean Fleming"
+                        width={320}
+                        height={320}
+                        className="w-full h-full object-cover object-center"
+                        priority
+                      />
+                    </div>
+                  </div>
+                  {/* Floating badges */}
+                  <div className="absolute -top-4 -right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+                    Director
+                  </div>
+                  <div className="absolute -bottom-4 -left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+                    Developer
+                  </div>
+                </div>
               </div>
             </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-      
-      {/* Futuristic decorative elements */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: isLoading ? 3.7 : 0, duration: 0.5 }}
-        className="absolute top-8 left-8 z-10 text-purple-500/30"
-      >
-        <Terminal className="h-6 w-6" />
-      </motion.div>
-      
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: isLoading ? 3.9 : 0, duration: 0.5 }}
-        className="absolute top-8 right-8 z-10 text-blue-500/30"
-      >
-        <Cpu className="h-6 w-6" />
-      </motion.div>
-      
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: isLoading ? 4.1 : 0, duration: 0.5 }}
-        className="absolute bottom-24 left-8 z-10 text-pink-500/30"
-      >
-        <Scan className="h-6 w-6" />
-      </motion.div>
-      
-      {/* Main content */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: isLoading ? 3.5 : 0, duration: 0.8 }}
-      >
-        <LandingCard />
-      </motion.div>
-      
-      {/* Footer */}
-      <motion.div 
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: isLoading ? 4 : 0, duration: 0.5 }}
-        className="absolute bottom-4 text-neutral-500 text-xs z-10 flex flex-col items-center"
-      >
-        <p>© {new Date().getFullYear()} Dean Fleming. All rights reserved.</p>
-      </motion.div>
-      
-      {/* Interactive corner decorations */}
-      <div className="fixed inset-0 pointer-events-none z-10">
-        <div className="absolute top-0 left-0 w-[100px] h-[100px]">
-          <div className="absolute top-0 left-0 w-[1px] h-[40px] bg-purple-500/30" />
-          <div className="absolute top-0 left-0 w-[40px] h-[1px] bg-purple-500/30" />
-        </div>
-        
-        <div className="absolute top-0 right-0 w-[100px] h-[100px]">
-          <div className="absolute top-0 right-0 w-[1px] h-[40px] bg-blue-500/30" />
-          <div className="absolute top-0 right-0 w-[40px] h-[1px] bg-blue-500/30" />
-        </div>
-        
-        <div className="absolute bottom-0 left-0 w-[100px] h-[100px]">
-          <div className="absolute bottom-0 left-0 w-[1px] h-[40px] bg-pink-500/30" />
-          <div className="absolute bottom-0 left-0 w-[40px] h-[1px] bg-pink-500/30" />
-        </div>
-        
-        <div className="absolute bottom-0 right-0 w-[100px] h-[100px]">
-          <div className="absolute bottom-0 right-0 w-[1px] h-[40px] bg-purple-500/30" />
-          <div className="absolute bottom-0 right-0 w-[40px] h-[1px] bg-purple-500/30" />
-        </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section className="mb-24">
+          <h2 className="text-3xl font-bold mb-12 text-gray-900 dark:text-gray-100">Projects</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="glass-card rounded-xl p-8 hover-lift group">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center">
+                  <Building2 className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">DFMB</h3>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                Mortgage brokerage firm providing financing solutions for residential, 
+                commercial, and investment properties across the UK.
+              </p>
+              <Link 
+                href="https://dfmb.co.uk" 
+                className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors font-medium group-hover:gap-3"
+              >
+                Visit Site <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+            
+            <div className="glass-card rounded-xl p-8 hover-lift group">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center">
+                  <Code2 className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">ComfyCRM</h3>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                Custom CRM solution built specifically for mortgage professionals, 
+                streamlining client management and application workflows.
+              </p>
+              <Link 
+                href="https://comfycrm.com" 
+                className="inline-flex items-center gap-2 text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition-colors font-medium group-hover:gap-3"
+              >
+                Learn More <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+            
+            <div className="glass-card rounded-xl p-8 hover-lift group">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 rounded-lg bg-purple-500 flex items-center justify-center">
+                  <Wrench className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Mortgage.tools</h3>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                Collection of calculators and tools designed to help mortgage 
+                professionals with common calculations and client scenarios.
+              </p>
+              <Link 
+                href="https://mortgage.tools" 
+                className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors font-medium group-hover:gap-3"
+              >
+                Explore Tools <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+            
+            <div className="glass-card rounded-xl p-8 hover-lift group">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 rounded-lg bg-gray-600 dark:bg-gray-500 flex items-center justify-center">
+                  <Github className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Open Source</h3>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                Various development projects and contributions to open source software, 
+                primarily focused on business automation and productivity tools.
+              </p>
+              <Link 
+                href="https://github.com/deanfleming93" 
+                className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors font-medium group-hover:gap-3"
+              >
+                View GitHub <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section className="mb-24">
+          <h2 className="text-3xl font-bold mb-12 text-gray-900 dark:text-gray-100">Expertise</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="glass-card rounded-xl p-8 hover-lift text-center">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 mx-auto mb-6 flex items-center justify-center">
+                <Building2 className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Business Leadership</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Strategic planning, team management, and operational oversight in financial services.
+              </p>
+            </div>
+            <div className="glass-card rounded-xl p-8 hover-lift text-center">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-400 to-green-600 mx-auto mb-6 flex items-center justify-center">
+                <Code2 className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Software Development</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Full-stack development with focus on business automation and workflow optimization.
+              </p>
+            </div>
+            <div className="glass-card rounded-xl p-8 hover-lift text-center">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 mx-auto mb-6 flex items-center justify-center">
+                <Wrench className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Industry Knowledge</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Deep understanding of mortgage markets, regulatory requirements, and client needs.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Connect Section */}
+        <section className="mb-16">
+          <div className="glass-card rounded-2xl p-8 md:p-12 text-center hover-lift">
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Get in Touch</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
+              Interested in collaborating or learning more about my work? Let's connect.
+            </p>
+            <div className="flex flex-wrap gap-6 justify-center">
+              <Link 
+                href="https://linkedin.com/in/deanfleming" 
+                className="btn-primary inline-flex items-center gap-3 px-8 py-4 text-white rounded-xl font-medium"
+              >
+                <Linkedin className="h-5 w-5" />
+                LinkedIn
+              </Link>
+              <Link 
+                href="https://github.com/deanfleming93" 
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-xl font-medium transition-all hover-lift"
+              >
+                <Github className="h-5 w-5" />
+                GitHub
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            © {new Date().getFullYear()} Dean Fleming. All rights reserved.
+          </p>
+        </footer>
       </div>
     </main>
   )

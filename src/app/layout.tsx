@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +14,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dean Fleming's Digital Space",
-  description: "Director of DFMB, Expert Mortgage Broker",
+  title: "Dean Fleming - Director & Developer",
+  description: "Entrepreneur and software developer combining business leadership with technical expertise. Building solutions for the mortgage industry.",
+  keywords: ["entrepreneur", "software developer", "DFMB", "ComfyCRM", "mortgage tools", "Dean Fleming"],
+  authors: [{ name: "Dean Fleming" }],
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -23,25 +31,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            document.addEventListener('mousemove', (e) => {
-              const cards = document.getElementsByClassName('spotlight-effect');
-              for (const card of cards) {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', \`\${x}px\`);
-                card.style.setProperty('--mouse-y', \`\${y}px\`);
-              }
-            });
-          `
-        }} />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem={true}
+          disableTransitionOnChange={false}
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
