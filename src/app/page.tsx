@@ -1,13 +1,24 @@
-'use client'
-
 import { Github, Linkedin, ExternalLink, Building2, Code2, Wrench, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { getAllPosts } from "@/lib/blog"
+import { BlogCard } from "@/components/blog-card"
+import Particles from "@/components/magicui/particles"
+import AnimatedGradientText from "@/components/magicui/animated-gradient-text"
+import ShimmerButton from "@/components/magicui/shimmer-button"
+import { GridPattern } from "@/components/magicui/grid-pattern"
 
-export default function Home() {
+export default async function Home() {
+  const allPosts = await getAllPosts()
+  const recentPosts = allPosts.slice(0, 3) // Get the 3 most recent posts
+  
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 transition-all duration-300">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 transition-all duration-300 relative overflow-hidden">
+      {/* Grid Pattern Background */}
+      <GridPattern className="absolute inset-0 opacity-30 dark:opacity-10" />
+      {/* Particles Background */}
+      <Particles className="absolute inset-0" quantity={50} />
       {/* Navigation */}
       <nav className="fixed top-0 right-0 p-6 z-50">
         <ThemeToggle />
@@ -16,17 +27,19 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-6 py-20">
         {/* Combined Hero + About Section */}
         <section className="mb-24">
-          <div className="glass-card rounded-3xl p-8 md:p-16 hover-lift animate-fade-in-up">
+          <div className="glass-card rounded-3xl p-8 md:p-16 hover-lift animate-fade-in-up backdrop-blur-md bg-white/70 dark:bg-slate-800/70 border border-white/20 dark:border-slate-700/30 shadow-2xl">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left Column - Content */}
               <div className="space-y-8">
                 <div className="space-y-6">
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
-                    <span className="gradient-text">Dean Fleming</span>
+                    <span className="animate-gradient bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent inline-block">Dean Fleming</span>
                   </h1>
-                  <p className="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-200">
-                    Director & Developer
-                  </p>
+                  <AnimatedGradientText className="text-2xl md:text-3xl font-semibold">
+                    <span className="animate-gradient bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent">
+                      Director & Developer
+                    </span>
+                  </AnimatedGradientText>
                   <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
                     Building solutions for the mortgage industry
                   </p>
@@ -64,7 +77,7 @@ export default function Home() {
               <div className="flex justify-center lg:justify-end">
                 <div className="relative">
                   {/* Gradient Ring */}
-                  <div className="absolute -inset-4 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full blur-lg opacity-75 animate-pulse"></div>
+                  <div className="absolute -inset-4 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full blur-lg opacity-75 animate-pulse animated-gradient"></div>
                   {/* Photo Container */}
                   <div className="relative w-80 h-80 rounded-full overflow-hidden bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 p-1">
                     <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-slate-800">
@@ -94,8 +107,8 @@ export default function Home() {
         {/* Projects Section */}
         <section className="mb-24">
           <h2 className="text-3xl font-bold mb-12 text-gray-900 dark:text-gray-100">Projects</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="glass-card rounded-xl p-8 hover-lift group">
+          <div className="grid md:grid-cols-2 gap-8 stagger-animate">
+            <div className="glass-card rounded-xl p-8 hover-lift group backdrop-blur-sm bg-white/60 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/30 transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center">
                   <Building2 className="h-6 w-6 text-white" />
@@ -108,13 +121,13 @@ export default function Home() {
               </p>
               <Link 
                 href="https://dfmb.co.uk" 
-                className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors font-medium group-hover:gap-3"
+                className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all font-medium group-hover:gap-3 group-hover:text-blue-500 shimmer-effect px-2 py-1 -mx-2 -my-1 rounded"
               >
-                Visit Site <ArrowUpRight className="h-4 w-4" />
+                Visit Site <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </Link>
             </div>
             
-            <div className="glass-card rounded-xl p-8 hover-lift group">
+            <div className="glass-card rounded-xl p-8 hover-lift group backdrop-blur-sm bg-white/60 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/30 transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 rounded-lg bg-green-500 flex items-center justify-center">
                   <Code2 className="h-6 w-6 text-white" />
@@ -127,32 +140,32 @@ export default function Home() {
               </p>
               <Link 
                 href="https://comfycrm.com" 
-                className="inline-flex items-center gap-2 text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition-colors font-medium group-hover:gap-3"
+                className="inline-flex items-center gap-2 text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition-all font-medium group-hover:gap-3 group-hover:text-green-500 shimmer-effect px-2 py-1 -mx-2 -my-1 rounded"
               >
-                Learn More <ArrowUpRight className="h-4 w-4" />
+                Learn More <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </Link>
             </div>
             
-            <div className="glass-card rounded-xl p-8 hover-lift group">
+            <div className="glass-card rounded-xl p-8 hover-lift group backdrop-blur-sm bg-white/60 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/30 transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 rounded-lg bg-purple-500 flex items-center justify-center">
                   <Wrench className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Mortgage.tools</h3>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">iTrackDaily</h3>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                Collection of calculators and tools designed to help mortgage 
-                professionals with common calculations and client scenarios.
+                Personal tracking application to monitor habits, mood, and metrics. 
+                See how your results compound over time with data visualization.
               </p>
               <Link 
-                href="https://mortgage.tools" 
-                className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors font-medium group-hover:gap-3"
+                href="https://itrackdaily.com" 
+                className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-all font-medium group-hover:gap-3 group-hover:text-purple-500 shimmer-effect px-2 py-1 -mx-2 -my-1 rounded"
               >
-                Explore Tools <ArrowUpRight className="h-4 w-4" />
+                Track Progress <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </Link>
             </div>
             
-            <div className="glass-card rounded-xl p-8 hover-lift group">
+            <div className="glass-card rounded-xl p-8 hover-lift group backdrop-blur-sm bg-white/60 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/30 transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 rounded-lg bg-gray-600 dark:bg-gray-500 flex items-center justify-center">
                   <Github className="h-6 w-6 text-white" />
@@ -164,10 +177,10 @@ export default function Home() {
                 primarily focused on business automation and productivity tools.
               </p>
               <Link 
-                href="https://github.com/deanfleming93" 
-                className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors font-medium group-hover:gap-3"
+                href="https://github.com/itsthegoodlife" 
+                className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-all font-medium group-hover:gap-3 group-hover:text-gray-500 shimmer-effect px-2 py-1 -mx-2 -my-1 rounded"
               >
-                View GitHub <ArrowUpRight className="h-4 w-4" />
+                View GitHub <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </Link>
             </div>
           </div>
@@ -176,7 +189,7 @@ export default function Home() {
         {/* Skills Section */}
         <section className="mb-24">
           <h2 className="text-3xl font-bold mb-12 text-gray-900 dark:text-gray-100">Expertise</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 stagger-animate">
             <div className="glass-card rounded-xl p-8 hover-lift text-center">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 mx-auto mb-6 flex items-center justify-center">
                 <Building2 className="h-8 w-8 text-white" />
@@ -207,6 +220,41 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Blog Preview Section */}
+        <section className="mb-24">
+          <div className="flex justify-between items-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Latest Blog Posts</h2>
+            <Link 
+              href="/blog" 
+              className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors font-medium"
+            >
+              View all posts <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+          {recentPosts.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {recentPosts.map((post) => (
+                <BlogCard key={post.slug} post={post} />
+              ))}
+            </div>
+          ) : (
+            <div className="glass-card rounded-xl p-8 hover-lift text-center">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                I write about business, technology, and building solutions for the mortgage industry.
+              </p>
+              <p className="text-gray-500 dark:text-gray-400 mb-6">
+                No blog posts yet. Check back soon for new content!
+              </p>
+              <Link 
+                href="/blog" 
+                className="btn-primary inline-flex items-center gap-3 px-6 py-3 text-white rounded-xl font-medium"
+              >
+                Visit Blog <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+          )}
+        </section>
+
         {/* Connect Section */}
         <section className="mb-16">
           <div className="glass-card rounded-2xl p-8 md:p-12 text-center hover-lift">
@@ -215,15 +263,16 @@ export default function Home() {
               Interested in collaborating or learning more about my work? Let&apos;s connect.
             </p>
             <div className="flex flex-wrap gap-6 justify-center">
-              <Link 
-                href="https://linkedin.com/in/deanfleming" 
-                className="btn-primary inline-flex items-center gap-3 px-8 py-4 text-white rounded-xl font-medium"
-              >
-                <Linkedin className="h-5 w-5" />
-                LinkedIn
+              <Link href="https://www.linkedin.com/in/deanflemingmortgages/">
+                <ShimmerButton className="shadow-2xl">
+                  <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg flex items-center gap-3">
+                    <Linkedin className="h-5 w-5" />
+                    LinkedIn
+                  </span>
+                </ShimmerButton>
               </Link>
               <Link 
-                href="https://github.com/deanfleming93" 
+                href="https://github.com/itsthegoodlife" 
                 className="inline-flex items-center gap-3 px-8 py-4 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-xl font-medium transition-all hover-lift"
               >
                 <Github className="h-5 w-5" />
